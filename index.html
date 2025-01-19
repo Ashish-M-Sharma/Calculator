@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        .main-container {
+            border: 4px solid black;
+            width: 300px;
+            height: auto;
+            margin: 80px auto;
+            border-radius: 25px;
+            background-color: black;
+        }
+
+        #display {
+            margin: 18px;
+            overflow-y: hidden;
+            resize: none;
+            /* Prevents resizing */
+            overflow: hidden;
+            /* Hide any overflowing text */
+        }
+
+        #display:focus {
+            outline: none;
+            border-color: black;
+        }
+
+        input {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 15px;
+            font-weight: bold;
+            border: solid 1px rgb(0, 0, 0);
+            cursor: pointer;
+            caret-color: transparent;
+        }
+
+        .cont-1 {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-container">
+        <div>
+            <textarea
+                style="background-color: black; color: white; font-size: 30px; border-color: rgb(34, 33, 33); resize: none; overflow: hidden;"
+                rows="1" cols="15" id="display" readonly></textarea>
+
+            <div>
+                <div
+                    style="display: flex; flex-direction: column; justify-content: space-around; gap: 30px; padding: 10px;">
+                    <div class="cont-1">
+                        <input style="background-color: rgb(149, 145, 145); color: white;" id="allclear" type="button"
+                            value="AC">
+                        <input style="background-color: rgba(149, 145, 145); color: white;" id="del" type="button"
+                            value="Del">
+                        <input style="background-color: rgba(149, 145, 145); color: white;" id="mod" type="button"
+                            value="%">
+                        <input style="background-color: orange; color:white; " id="div" type="button" value="/">
+                    </div>
+
+                    <div class="cont-1">
+                        <input style="background-color: rgb(51, 49, 49); color: white;" id="nine" type="button"
+                            value="9">
+                        <input style="background-color: rgb(51, 49, 49); color: white;" id="eight" type="button"
+                            value="8">
+                        <input style="background-color: rgb(51, 49, 49); color: white;" id="seven" type="button"
+                            value="7">
+                        <input style="background-color: orange; color:white; " id="mul" type="button" value="*">
+                    </div>
+
+                    <div class="cont-1">
+                        <input style="background-color: rgb(51, 49, 49); color: white;" id="four" type="button"
+                            value="4">
+                        <input style="background-color: rgb(51, 49, 49); color: white;" id="five" type="button"
+                            value="5">
+                        <input style="background-color: rgb(51, 49, 49); color: white;" id="six" type="button"
+                            value="6">
+                        <input style="background-color: orange; color:white; " id="sub" type="button" value="-">
+                    </div>
+
+                    <div class="cont-1">
+                        <input style="background-color: rgb(51, 49, 49); color: white;" id="one" type="button"
+                            value="1">
+                        <input style="background-color: rgb(51, 49, 49); color: white;" id="two" type="button"
+                            value="2">
+                        <input style="background-color: rgb(51, 49, 49); color: white;" id="three" type="button"
+                            value="3">
+                        <input style="background-color: orange; color:white; " id="add" type="button" value="+">
+                    </div>
+
+                    <div class="cont-1">
+                        <input
+                            style="width: 100px; height: 40px; border-radius: 20px; background-color: rgb(51, 49, 49);color: white;"
+                            id="zero" type="button" value="0">
+                        <input style="background-color: rgb(51, 49, 49); color: white;" id="dot" type="button"
+                            value=".">
+                        <input style="background-color: orange; color:white; " id="equal" type="button" value="=">
+                    </div>
+
+                    <div
+                        style="width: 100px; height: 1px; background-color: rgba(149, 145, 145); margin: 5px auto; padding-bottom: 2px;">
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <script>
+        const display = document.getElementById('display');
+        const buttons = document.querySelectorAll('input[type="button"]');
+
+        let currentInput = '';
+        let operator = '';
+
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                const value = button.value;
+
+                switch (value) {
+                    case 'AC':
+                        currentInput = '';
+                        operator = '';
+                        display.value = '';
+                        break;
+                    case 'Del':
+                        currentInput = currentInput.slice(0, -1);
+                        display.value = currentInput;
+                        break;
+                    case '+':
+                    case '-':
+                    case '*':
+                    case '/':
+                    case '%':
+                        operator = value;
+                        currentInput += value;
+                        display.value = currentInput;
+                        break;
+                    case '=':
+                        try {
+                            const result = eval(currentInput);
+                            currentInput = result.toString();
+                            display.value = result;
+                        } catch (error) {
+                            display.value = 'Error';
+                        }
+                        break;
+                    default:
+                        currentInput += value;
+                        display.value = currentInput;
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
